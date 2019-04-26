@@ -4,6 +4,7 @@ from View.ToolTip import *
 from Model.PC import *
 from View.Skill1 import *
 from View.Skill2 import *
+import copy
 
 class Skills():
 
@@ -22,6 +23,11 @@ class Skills():
         self.jinengdict[''] = ['']
         self.jinengdict["护士"] = ["急救","医学","心理学","聆听"]
         self.jinengdict["神秘学家"] = ["人类学","历史","图书馆","神秘学"]
+
+        self.dianshudict = {}
+        self.dianshudict[''] = 0
+        self.dianshudict["护士"] = player.edu * 4
+        self.dianshudict["神秘学家"] = player.edu * 4
 
         sk1 = Skill1(master, self.ui, player)
         sk2 = Skill2(master, self.ui, player)
@@ -242,13 +248,968 @@ class Skills():
 
 
     def export_txt(self):
-        tx = 5 + int(self.frames["Skill1"].kuaijientry1.get("1.0",'end-1c')) + int(self.frames["Skill1"].kuaijientry2.get("1.0",'end-1c'))
-        if("会计" not in self.jinengdict[self.player.zhiye]):
-            if(tx > 50):
-                print("非本职技能")
+
+        tmp_player = copy.deepcopy(self.player)
+
+        maxbenzhi = 80
+        maxxingqu = 50
+
+        benzhi = 0
+        xingqu = 0
+
+        benzhi_total = self.dianshudict[tmp_player.zhiye]
+        xingqu_total =tmp_player.int * 2
+
+        ##会计
+        if self.frames["Skill1"].kuaijientry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].kuaijientry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].kuaijientry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].kuaijientry2.get("1.0",'end-1c'))
+        total = tmp_player.kuaiji + benzhi + xingqu
+
+        if "会计" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "会计不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "会计不是本职技能哦，不可以点超过50哦")
+                return
         else:
-            if(tx > 80):
-                print("过高")
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "会计虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_kuaiji(benzhi,xingqu)
+
+        ##人类学
+        if self.frames["Skill1"].renleixueentry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].renleixueentry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].renleixueentry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].renleixueentry2.get("1.0",'end-1c'))
+        total = tmp_player.renleixue + benzhi + xingqu
+
+        if "人类学" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "人类学不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "人类学不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "人类学虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_renleixue(benzhi,xingqu)
+
+
+        ##估价
+        if self.frames["Skill1"].gujiaentry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].gujiaentry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].gujiaentry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].gujiaentry2.get("1.0",'end-1c'))
+        total = tmp_player.gujia + benzhi + xingqu
+
+        if "估价" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "估价不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "估价不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "估价虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_gujia(benzhi,xingqu)
+
+        ##考古学
+        if self.frames["Skill1"].kaoguxueentry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].kaoguxueentry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].kaoguxueentry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].kaoguxueentry2.get("1.0",'end-1c'))
+        total = tmp_player.kaoguxue + benzhi + xingqu
+
+        if "考古学" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "考古学不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "考古学不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "考古学虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_kaoguxue(benzhi,xingqu)
+
+
+        ##魅惑
+        if self.frames["Skill1"].meihuoentry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].meihuoentry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].meihuoentry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].meihuoentry2.get("1.0",'end-1c'))
+        total = tmp_player.meihuo + benzhi + xingqu
+
+        if "魅惑" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "魅惑不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "魅惑不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "魅惑虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_meihuo(benzhi,xingqu)
+
+        ##攀爬
+        if self.frames["Skill1"].panpaentry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].panpaentry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].panpaentry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].panpaentry2.get("1.0",'end-1c'))
+        total = tmp_player.panpa + benzhi + xingqu
+
+        if "攀爬" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "攀爬不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "攀爬不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "攀爬虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_panpa(benzhi,xingqu)
+
+
+        ##计算机使用
+        if self.frames["Skill1"].jisuanjientry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].jisuanjientry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].jisuanjientry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].jisuanjientry2.get("1.0",'end-1c'))
+        total = tmp_player.jisuanji + benzhi + xingqu
+
+        if "计算机使用" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "计算机使用不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "计算机使用不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "计算机使用虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_jisuanji(benzhi,xingqu)
+
+        ##信用评级
+        if self.frames["Skill1"].xinyongentry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].xinyongentry2.get("1.0",'end-1c') != '0':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "信用评级只可使用本职技能点哦，而且一定要点哦，具体信用区间看你的职业下方有提示(不可留空）")
+            return
+        benzhi = int(self.frames["Skill1"].xinyongentry1.get("1.0",'end-1c'))
+        total = tmp_player.xinyong + benzhi
+
+        if total < self.xingyu[tmp_player.zhiye][0] or total > self.xingyu[tmp_player.zhiye][1]:
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "请确认信用评级区间，上面写的明明白白的了！")
+            return
+
+        benzhi_total -= benzhi
+        tmp_player.add_xinyong(benzhi,0)
+
+        ##乔庄
+        if self.frames["Skill1"].qiaozhuangentry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].qiaozhuangentry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].qiaozhuangentry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].qiaozhuangentry2.get("1.0",'end-1c'))
+        total = tmp_player.qiaozhuang + benzhi + xingqu
+
+        if "乔庄" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "乔庄不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "乔庄不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "乔庄虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_qiaozhuang(benzhi,xingqu)
+
+
+        ##闪避
+        if self.frames["Skill1"].shanbientry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].shanbientry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].shanbientry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].shanbientry2.get("1.0",'end-1c'))
+        total = tmp_player.shanbi + benzhi + xingqu
+
+        if "闪避" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "闪避不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "闪避不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "闪避虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_shanbi(benzhi,xingqu)
+
+
+        ##汽车驾驶
+        if self.frames["Skill1"].qichejiashientry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].qichejiashientry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].qichejiashientry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].qichejiashientry2.get("1.0",'end-1c'))
+        total = tmp_player.qichejiashi + benzhi + xingqu
+
+        if "汽车驾驶" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "汽车驾驶不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "汽车驾驶不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "汽车驾驶虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_qichejiashi(benzhi,xingqu)
+
+        ##电器维修
+        if self.frames["Skill1"].dianqiweixiuentry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].dianqiweixiuentry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].dianqiweixiuentry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].dianqiweixiuentry1.get("1.0",'end-1c'))
+        total = tmp_player.dianqiweixiu + benzhi + xingqu
+
+        if "电器维修" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "电器维修不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "电器维修不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "电器维修虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_dianqiweixiu(benzhi,xingqu)
+
+
+        ##电子学
+        if self.frames["Skill1"].dianzixueentry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].dianzixueentry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].dianzixueentry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].dianzixueentry2.get("1.0",'end-1c'))
+        total = tmp_player.dianzixue + benzhi + xingqu
+
+        if "电子学" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "电子学不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "电子学不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "电子学虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_dianzixue(benzhi,xingqu)
+
+
+        ##话术
+        if self.frames["Skill1"].huashuentry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].huashuentry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].huashuentry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].huashuentry2.get("1.0",'end-1c'))
+        total = tmp_player.huashu + benzhi + xingqu
+
+        if "话术" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "话术不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "话术不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "话术虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_huashu(benzhi,xingqu)
+
+
+        ##斗殴
+        if self.frames["Skill1"].dououentry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].dououentry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].dououentry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].dououentry2.get("1.0",'end-1c'))
+        total = tmp_player.douou + benzhi + xingqu
+
+        if "斗殴" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "斗殴不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "斗殴不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "斗殴虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_douou(benzhi,xingqu)
+
+        ##手枪
+        if self.frames["Skill1"].shouqiangentry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].shouqiangentry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].shouqiangentry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].shouqiangentry2.get("1.0",'end-1c'))
+        total = tmp_player.shouqiang + benzhi + xingqu
+
+        if "手枪" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "手枪不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "手枪不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "手枪虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_shouqiang(benzhi,xingqu)
+
+        ##急救
+        if self.frames["Skill1"].jijiuentry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].jijiuentry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].jijiuentry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].jijiuentry2.get("1.0",'end-1c'))
+        total = tmp_player.jijiu + benzhi + xingqu
+
+        if "急救" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "急救不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "急救不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "急救虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_jijiu(benzhi,xingqu)
+
+
+        ##历史
+        if self.frames["Skill1"].lishientry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].lishientry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].lishientry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].lishientry2.get("1.0",'end-1c'))
+        total = tmp_player.lishi + benzhi + xingqu
+
+        if "历史" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "历史不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "历史不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "历史虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_lishi(benzhi,xingqu)
+
+        ##恐吓
+        if self.frames["Skill1"].kongheentry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].kongheentry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].kongheentry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].kongheentry2.get("1.0",'end-1c'))
+        total = tmp_player.konghe + benzhi + xingqu
+
+        if "恐吓" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "恐吓不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "恐吓不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "恐吓虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_konghe(benzhi,xingqu)
+
+
+        ##跳跃
+        if self.frames["Skill1"].tiaoyueentry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].tiaoyueentry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].tiaoyueentry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].tiaoyueentry2.get("1.0",'end-1c'))
+        total = tmp_player.tiaoyue + benzhi + xingqu
+
+        if "跳跃" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "跳跃不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "跳跃不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "跳跃虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_tiaoyue(benzhi,xingqu)
+
+        ##法律
+        if self.frames["Skill1"].falventry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].falventry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].falventry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].falventry2.get("1.0",'end-1c'))
+        total = tmp_player.falv + benzhi + xingqu
+
+        if "法律" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "法律不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "法律不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "法律虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_falv(benzhi,xingqu)
+
+        ##图书馆使用
+        if self.frames["Skill1"].tushuguanentry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].tushuguanentry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].tushuguanentry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].tushuguanentry2.get("1.0",'end-1c'))
+        total = tmp_player.tushuguan + benzhi + xingqu
+
+        if "图书馆使用" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "图书馆使用不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "图书馆使用不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "图书馆使用虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_tushuguan(benzhi,xingqu)
+
+
+        ##聆听
+        if self.frames["Skill1"].lingtingentry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].lingtingentry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].lingtingentry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].lingtingentry2.get("1.0",'end-1c'))
+        total = tmp_player.lingting + benzhi + xingqu
+
+        if "聆听" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "聆听不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "聆听不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "聆听虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_lingting(benzhi,xingqu)
+
+
+        ##锁匠
+        if self.frames["Skill1"].suojiangentry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].suojiangentry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].suojiangentry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].suojiangentry2.get("1.0",'end-1c'))
+        total = tmp_player.suojiang + benzhi + xingqu
+
+        if "锁匠" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "锁匠不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "锁匠不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "锁匠虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_suojiang(benzhi,xingqu)
+
+
+        ##机械维修
+        if self.frames["Skill1"].jixieweixiuentry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].jixieweixiuentry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].jixieweixiuentry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].jixieweixiuentry2.get("1.0",'end-1c'))
+        total = tmp_player.jixieweixiu + benzhi + xingqu
+
+        if "机械维修" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "机械维修不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "机械维修不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "机械维修虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_jixieweixiu(benzhi,xingqu)
+
+
+        ##医学
+        if self.frames["Skill1"].yixueentry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].yixueentry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].yixueentry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].yixueentry2.get("1.0",'end-1c'))
+        total = tmp_player.yixue + benzhi + xingqu
+
+        if "医学" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "医学不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "医学不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "医学虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_yixue(benzhi,xingqu)
+
+
+        ##博物学
+        if self.frames["Skill1"].bowuxueentry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].bowuxueentry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].bowuxueentry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].bowuxueentry2.get("1.0",'end-1c'))
+        total = tmp_player.bowuxue + benzhi + xingqu
+
+        if "博物学" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "博物学不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "博物学不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "博物学虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_bowuxue(benzhi,xingqu)
+
+
+        ##领航
+        if self.frames["Skill1"].linghangentry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].linghangentry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].linghangentry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].linghangentry2.get("1.0",'end-1c'))
+        total = tmp_player.linghang + benzhi + xingqu
+
+        if "领航" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "领航不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "领航不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "领航虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_linghang(benzhi,xingqu)
+
+        ##神秘学
+        if self.frames["Skill1"].shengmixueentry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].shengmixueentry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].shengmixueentry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].shengmixueentry2.get("1.0",'end-1c'))
+        total = tmp_player.shenmixue + benzhi + xingqu
+
+        if "神秘学" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "神秘学不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "神秘学不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "神秘学虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_shenmixue(benzhi,xingqu)
+
+
+        ##操作重型机械
+        if self.frames["Skill1"].zhongxingjixieentry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].zhongxingjixieentry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].zhongxingjixieentry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].zhongxingjixieentry2.get("1.0",'end-1c'))
+        total = tmp_player.zhongxingjixie + benzhi + xingqu
+
+        if "操作重型机械" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "操作重型机械不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "操作重型机械不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "操作重型机械虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_zhongxingjixie(benzhi,xingqu)
+
+
+        ##说服
+        if self.frames["Skill1"].shuofuentry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].shuofuentry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].shuofuentry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].shuofuentry2.get("1.0",'end-1c'))
+        total = tmp_player.shuofu + benzhi + xingqu
+
+        if "说服" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "说服不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "说服不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "说服虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_shuofu(benzhi,xingqu)
+
+        ##精神分析
+        if self.frames["Skill1"].jingshengfengxientry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].jingshengfengxientry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].jingshengfengxientry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].jingshengfengxientry2.get("1.0",'end-1c'))
+        total = tmp_player.jingshengfenxi + benzhi + xingqu
+
+        if "精神分析" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "精神分析不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "精神分析不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "精神分析虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_jingshengfenxi(benzhi,xingqu)
+
+        ##心理学
+        if self.frames["Skill1"].xinglixueentry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].xinglixueentry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].xinglixueentry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].xinglixueentry2.get("1.0",'end-1c'))
+        total = tmp_player.xinlixue + benzhi + xingqu
+
+        if "心理学" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "心理学不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "心理学不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "心理学虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_xinlixue(benzhi,xingqu)
+
+        ##骑术
+        if self.frames["Skill1"].qishuentry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].qishuentry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].qishuentry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].qishuentry2.get("1.0",'end-1c'))
+        total = tmp_player.qishu + benzhi + xingqu
+
+        if "骑术" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "骑术不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "骑术不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "骑术虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_qishu(benzhi,xingqu)
+
+
+        ##妙手
+        if self.frames["Skill1"].miaoshouentry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].miaoshouentry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].miaoshouentry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].miaoshouentry2.get("1.0",'end-1c'))
+        total = tmp_player.miaoshou + benzhi + xingqu
+
+        if "妙手" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "妙手不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "妙手不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "妙手虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_miaoshou(benzhi,xingqu)
+
+
+        ##侦查
+        if self.frames["Skill1"].zhengchaentry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].zhengchaentry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].zhengchaentry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].zhengchaentry2.get("1.0",'end-1c'))
+        total = tmp_player.zhencha + benzhi + xingqu
+
+        if "侦查" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "侦查不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "侦查不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "侦查虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_zhencha(benzhi,xingqu)
+
+
+        ##潜行
+        if self.frames["Skill1"].qianxingentry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].qianxingentry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].qianxingentry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].qianxingentry2.get("1.0",'end-1c'))
+        total = tmp_player.qianxing + benzhi + xingqu
+
+        if "潜行" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "潜行不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "潜行不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "潜行虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_qianxing(benzhi,xingqu)
+
+        ##游泳
+        if self.frames["Skill1"].youyongentry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].youyongentry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].youyongentry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].youyongentry2.get("1.0",'end-1c'))
+        total = tmp_player.youyong + benzhi + xingqu
+
+        if "游泳" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "游泳不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "游泳不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "游泳虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_youyong(benzhi,xingqu)
+
+
+        ##投掷
+        if self.frames["Skill1"].touzhientry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].touzhientry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].touzhientry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].touzhientry2.get("1.0",'end-1c'))
+        total = tmp_player.touzhi + benzhi + xingqu
+
+        if "投掷" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "投掷不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "投掷不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "投掷虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_touzhi(benzhi,xingqu)
+
+
+        ##追踪
+        if self.frames["Skill1"].zhuizongentry1.get("1.0",'end-1c') == '' or self.frames["Skill1"].zhuizongentry2.get("1.0",'end-1c') == '':
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "不要给加点那页留空白,不点就乖乖的回去输入0,我抓Exception很累的")
+            return
+        benzhi = int(self.frames["Skill1"].zhuizongentry1.get("1.0",'end-1c'))
+        xingqu  = int(self.frames["Skill1"].zhuizongentry2.get("1.0",'end-1c'))
+        total = tmp_player.zhuizong + benzhi + xingqu
+
+        if "追踪" not in self.jinengdict[tmp_player.zhiye]:
+            if(benzhi != 0):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "追踪不是本职技能哦，不可分配本职技能点哦")
+                return
+            if(total > maxxingqu):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "追踪不是本职技能哦，不可以点超过50哦")
+                return
+        else:
+            if(total > maxbenzhi):
+                tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "追踪虽然是本职技能，但是不能超过80哦")
+                return
+        benzhi_total -= benzhi
+        xingqu_total -= xingqu
+        tmp_player.add_zhuizong(benzhi,xingqu)
+
+        if(benzhi_total < 0):
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "小贪心哦，本职点数用的多了哦，再回去口算一下")
+            return
+
+        if(xingqu_total < 0):
+            tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "小贪心哦，兴趣点数用的多了哦，再回去口算一下")
+            return
+
+
+
+
+        print("本职还剩" + str(benzhi_total))
+        print("兴趣还剩" + str(xingqu_total))
+
+
+
 
 
     def save_zhiye(self, zhiye):

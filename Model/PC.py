@@ -73,12 +73,12 @@ class player(object):
         self.falv = 5 ##法律
         self.tushuguan = 20 ##图书馆
         self.lingting = 20 ##聆听
-        self.kaisuo = 1 ##开锁
+        self.suojiang = 1 ##锁匠
         self.jixieweixiu = 10 ##机械维修
         self.yixue = 1 ##医学
         self.bowuxue = 10 ##博物学
         self.linghang = 10 ##领航
-        self.shengmixue = 5 ##神秘学
+        self.shenmixue = 5 ##神秘学
         self.zhongxingjixie = 1 ##操作重型机械
         self.shuofu = 10 ##说服
         self.jingshengfenxi = 1 ##精神分析
