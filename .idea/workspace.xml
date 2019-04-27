@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4e2751be-414a-437d-b6a2-1f8aa10b7c43" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Model/PC.py" afterPath="$PROJECT_DIR$/Model/PC.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/InitialAttr.py" afterPath="$PROJECT_DIR$/View/InitialAttr.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/Skills.py" afterPath="$PROJECT_DIR$/View/Skills.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,11 +20,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="InitialAttr.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="InitialAttr.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/View/InitialAttr.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6256">
-              <caret line="277" column="73" lean-forward="false" selection-start-line="277" selection-start-column="12" selection-end-line="277" selection-end-column="73" />
+            <state relative-caret-position="343">
+              <caret line="229" column="69" lean-forward="false" selection-start-line="229" selection-start-column="69" selection-end-line="229" selection-end-column="69" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -36,18 +35,18 @@
       <file leaf-file-name="PC.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Model/PC.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="299">
+            <state relative-caret-position="168">
               <caret line="105" column="23" lean-forward="false" selection-start-line="105" selection-start-column="13" selection-end-line="105" selection-end-column="23" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Skills.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Skills.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/View/Skills.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="1267" column="32" lean-forward="true" selection-start-line="1267" selection-start-column="32" selection-end-line="1267" selection-end-column="32" />
+            <state relative-caret-position="272">
+              <caret line="1251" column="29" lean-forward="true" selection-start-line="1251" selection-start-column="29" selection-end-line="1251" selection-end-column="29" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -114,6 +113,7 @@
       <find>round</find>
       <find>qishu</find>
       <find>low</find>
+      <find>角色创建成功！</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -129,10 +129,10 @@
         <option value="$PROJECT_DIR$/View/ToolTip.py" />
         <option value="$PROJECT_DIR$/View/Skill2.py" />
         <option value="$PROJECT_DIR$/View/testUI.py" />
-        <option value="$PROJECT_DIR$/View/InitialAttr.py" />
         <option value="$PROJECT_DIR$/View/Skill1.py" />
         <option value="$PROJECT_DIR$/Model/PC.py" />
         <option value="$PROJECT_DIR$/View/Skills.py" />
+        <option value="$PROJECT_DIR$/View/InitialAttr.py" />
       </list>
     </option>
   </component>
@@ -473,7 +473,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1098" extended-state="6" />
+    <frame x="-9" y="-9" width="1938" height="1098" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -935,16 +935,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/View/InitialAttr.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6256">
-          <caret line="277" column="73" lean-forward="false" selection-start-line="277" selection-start-column="12" selection-end-line="277" selection-end-column="73" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/赵日天.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -963,20 +953,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/View/Skills.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="1251" column="29" lean-forward="true" selection-start-line="1251" selection-start-column="29" selection-end-line="1251" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Model/PC.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
+        <state relative-caret-position="168">
           <caret line="105" column="23" lean-forward="false" selection-start-line="105" selection-start-column="13" selection-end-line="105" selection-end-column="23" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/View/Skills.py">
+    <entry file="file://$PROJECT_DIR$/View/InitialAttr.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="1267" column="32" lean-forward="true" selection-start-line="1267" selection-start-column="32" selection-end-line="1267" selection-end-column="32" />
+        <state relative-caret-position="343">
+          <caret line="229" column="69" lean-forward="false" selection-start-line="229" selection-start-column="69" selection-end-line="229" selection-end-column="69" />
           <folding>
-            <element signature="e#0#21#0" expanded="true" />
+            <element signature="e#0#13#0" expanded="true" />
           </folding>
         </state>
       </provider>

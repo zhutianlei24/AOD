@@ -223,7 +223,7 @@ class InitialAttr():
         def create_character():
             error_message, result = self.check_attributes()
             if(result == True):
-                print("角色创建成功！")
+                # print("角色创建成功！")
                 this_Player = player(self.entryname.get(), int(self.entryage.get()), int(self.entrystrength.get()),
                                      int(self.entryconstitution.get()), int(self.entrysize.get()), int(self.entrydexterity.get()),
                                      int(self.entryappearence.get()), int(self.entryeducation.get()), int(self.entryintelligence.get()),

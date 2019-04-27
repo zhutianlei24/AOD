@@ -1269,8 +1269,8 @@ class Skills():
 
         tkinter.messagebox.showinfo("你好六啊", "角色保存成功，可按右边的按钮一键导出txt")
 
-        print("本职还剩" + str(benzhi_total))
-        print("兴趣还剩" + str(xingqu_total))
+        # print("本职还剩" + str(benzhi_total))
+        # print("兴趣还剩" + str(xingqu_total))
 
 
 
