@@ -93,6 +93,17 @@ class player(object):
 
 
         self.zhiye = ''
+        self.sex = ''
+        self.living = ''
+        self.born = ''
+        self.appdes = ''
+        self.thoughts = ''
+        self.love = ''
+        self.place = ''
+        self.tresure = ''
+        self.special = ''
+        self.things = ''
+        self.background = ''
 
     ##获取八大属性和
     def sum_attr(self):

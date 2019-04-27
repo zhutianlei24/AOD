@@ -3,7 +3,6 @@ import tkinter.messagebox
 from View.ToolTip import *
 from Model.PC import *
 from View.Skill1 import *
-from View.Skill2 import *
 import copy
 
 class Skills():
@@ -30,10 +29,9 @@ class Skills():
         self.dianshudict["神秘学家"] = player.edu * 4
 
         sk1 = Skill1(master, self.ui, player)
-        sk2 = Skill2(master, self.ui, player)
         self.frames = {}
         self.frames["Skill1"] = sk1
-        self.frames["Skill2"] = sk2
+
 
 
 
@@ -140,8 +138,8 @@ class Skills():
         sexinfo = CreateToolTip(sexlabel,"这个不用解释了吧？所以我为什么要做这个hint???")
         initialsex = StringVar()
         initialsex.set("N/A")
-        self.entrypower = Entry(self.ui, textvariable=initialsex)
-        self.entrypower.place(x=300, y=143)
+        self.entrysex = Entry(self.ui, textvariable=initialsex)
+        self.entrysex.place(x=300, y=143)
 
         living = StringVar()
         living.set("住地:")
@@ -150,8 +148,8 @@ class Skills():
         livinginfo = CreateToolTip(livinglabel, "PC住地，例如东京")
         initialliving = StringVar()
         initialliving.set("N/A")
-        self.entrypower = Entry(self.ui, textvariable=initialliving)
-        self.entrypower.place(x=300, y=173)
+        self.entryliving = Entry(self.ui, textvariable=initialliving)
+        self.entryliving.place(x=300, y=173)
 
         born = StringVar()
         born.set("出生地:")
@@ -160,8 +158,8 @@ class Skills():
         bornlabel.place(x=200, y=195)
         initialborn = StringVar()
         initialborn.set("N/A")
-        self.entrypower = Entry(self.ui, textvariable=initialborn)
-        self.entrypower.place(x=300, y=203)
+        self.entryborn= Entry(self.ui, textvariable=initialborn)
+        self.entryborn.place(x=300, y=203)
 
         appdes = StringVar()
         appdes.set("形象描述:")
@@ -170,8 +168,8 @@ class Skills():
         appdesinfo = CreateToolTip(appdeslabel, "PC简单的外貌描述，例如儒雅随和")
         initialappdes = StringVar()
         initialappdes.set("N/A")
-        self.entrypower = Entry(self.ui, textvariable=initialappdes)
-        self.entrypower.place(x=300, y=233)
+        self.entryappdes = Entry(self.ui, textvariable=initialappdes)
+        self.entryappdes.place(x=300, y=233)
 
 
         thoughts = StringVar()
@@ -181,8 +179,8 @@ class Skills():
         thoughtsinfo = CreateToolTip(thoughtslabel, "PC的信念，例如传火")
         initialthoughts = StringVar()
         initialthoughts.set("N/A")
-        self.entrypower = Entry(self.ui, textvariable=initialthoughts)
-        self.entrypower.place(x=300, y=263)
+        self.entrythoughts = Entry(self.ui, textvariable=initialthoughts)
+        self.entrythoughts.place(x=300, y=263)
 
         love = StringVar()
         love.set("重要之人:")
@@ -191,8 +189,8 @@ class Skills():
         loveinfo = CreateToolTip(lovelabel, "PC的重要之人，例如带带大师兄")
         initiallove = StringVar()
         initiallove.set("N/A")
-        self.entrypower = Entry(self.ui, textvariable=initiallove)
-        self.entrypower.place(x=300, y=293)
+        self.entrylove = Entry(self.ui, textvariable=initiallove)
+        self.entrylove.place(x=300, y=293)
 
         place = StringVar()
         place.set("意义非凡之地:")
@@ -201,8 +199,8 @@ class Skills():
         placeinfo = CreateToolTip(placelabel, "PC的重要之地，例如亚楠村")
         initialplace = StringVar()
         initialplace.set("N/A")
-        self.entrypower = Entry(self.ui, textvariable=initialplace)
-        self.entrypower.place(x=300, y=323)
+        self.entryplace = Entry(self.ui, textvariable=initialplace)
+        self.entryplace.place(x=300, y=323)
 
         tresure = StringVar()
         tresure.set("宝贵之物:")
@@ -211,8 +209,8 @@ class Skills():
         tresureinfo = CreateToolTip(tresurelabel, "PC的重要之物，例如XXX打过的篮球")
         initialtresure = StringVar()
         initialtresure.set("N/A")
-        self.entrypower = Entry(self.ui, textvariable=initialtresure)
-        self.entrypower.place(x=300, y=353)
+        self.entrytresure = Entry(self.ui, textvariable=initialtresure)
+        self.entrytresure.place(x=300, y=353)
 
         special = StringVar()
         special.set("特质:")
@@ -221,33 +219,86 @@ class Skills():
         specialinfo = CreateToolTip(speciallabel, "PC的性格特点，例如就是嘴臭")
         initialspecial = StringVar()
         initialspecial.set("N/A")
-        self.entrypower = Entry(self.ui, textvariable=initialspecial)
-        self.entrypower.place(x=300, y=383)
+        self.entryspecial = Entry(self.ui, textvariable=initialspecial)
+        self.entryspecial.place(x=300, y=383)
+
+
+        things = StringVar()
+        things.set("随身物品：")
+        thingslabel = Label(self.ui, textvariable=things, width=8, height=2)
+        thingslabel.place(x=200, y=405)
+        thingsinfo = CreateToolTip(thingslabel, "这次参团所带的东西，必须合理合法")
+        # initialbackground = StringVar()
+        # initialbackground.set("N/A")
+        self.textthings = Text(self.ui, width=40, height=7)
+        self.textthings.place(x=300, y=413)
+        self.textthings.insert(END,'N/A')
 
         background = StringVar()
         background.set("背景故事：")
         backgroundlabel = Label(self.ui, textvariable=background, width=8, height=2)
-        backgroundlabel.place(x=200, y=405)
+        backgroundlabel.place(x=200, y=535)
         backgroundinfo = CreateToolTip(backgroundlabel, "把上面这么多东西串起来，结合你的属性已经你准备点的技能"
                                                         "编一个故事来说服KP你这个角色的存在是合理的")
         # initialbackground = StringVar()
         # initialbackground.set("N/A")
-        self.textbackground = Text(self.ui, width=40, height=20)
-        self.textbackground.place(x=300, y=413)
+        self.textbackground = Text(self.ui, width=40, height=7)
+        self.textbackground.place(x=300, y=543)
         self.textbackground.insert(END,'N/A')
 
 
-        jump_skillpage1 = Button(self.ui, text="技能页1",  command=lambda: self.show_frame("Skill1"))
+        jump_skillpage1 = Button(self.ui, text="技能页",  command=lambda: self.show_frame("Skill1"))
         jump_skillpage1.place(x=150, y=690)
 
-        jump_skillpage2 = Button(self.ui, text="技能页2",  command=lambda: self.show_frame("Skill2"))
-        jump_skillpage2.place(x=550, y=690)
+        export_it = Button(self.ui, text="导出成TXT",  command=lambda: self.export_txt())
+        export_it.place(x=550, y=690)
 
-        create_txt = Button(self.ui, text="人物作成",  command=lambda: self.export_txt())
+        create_txt = Button(self.ui, text="人物作成",  command=lambda: self.create_character())
         create_txt.place(x=350, y=690)
 
 
     def export_txt(self):
+        player = self.player
+        filename = player.name + ".txt"
+        with open(filename,'w') as f:
+            f.write("=======================================\n")
+            f.write("姓名：" + player.name + '\n')
+            f.write("年龄: " + str(player.age) + '\n')
+            f.write("性别: " + player.sex + '\n')
+            f.write("出生地: " + player.born + '\n')
+            f.write("住地: " + player.living+ '\n')
+            f.write("形象描述: " + player.appdes + '\n')
+            f.write("思想与信念: " + player.thoughts + '\n')
+            f.write("重要之人: " + player.love + '\n')
+            f.write("意义非凡之地: " + player.place + '\n')
+            f.write("宝贵之物: " + player.tresure + '\n')
+            f.write("特质: " + player.special + '\n')
+            f.write("随身物品: " + player.things + '\n')
+            f.write("背景故事: " + player.background + '\n')
+            f.write("=======================================\n")
+            f.write("九大属性：\n" )
+            f.write("力量: " + str(player.str) + ", " + "体质: " + str(player.con) + ", " + "体型: " + str(player.siz) + '\n')
+            f.write("敏捷: " + str(player.dex) + ", " + "外貌: " + str(player.app) + ", " + "教育: " + str(player.edu) + '\n')
+            f.write("智力: " + str(player.int) + ", " + "意志: " + str(player.pow) + ", " + "幸运: " + str(player.luck) + '\n')
+            f.write("=======================================\n")
+            f.write("HP: " + str(player.hp) + ', ' + "SAN: " + str(player.pow) + ', ' + "魔法: " + str(floor(player.pow/5)) + '\n')
+            f.write("=======================================\n")
+            f.write("职业: " + player.zhiye + '\n')
+            f.write("本职技能： " + ', '.join(self.jinengdict[player.zhiye]) + '\n')
+            f.write("会计： " + str(player.kuaiji) + ", " + "人类学： " + str(player.renleixue) + ", " + "估价： " + str(player.gujia) + ", " + "考古学： " + str(player.kaoguxue) + '\n')
+            f.write("魅惑： " + str(player.meihuo) + ", " + "攀爬： " + str(player.panpa) + ", " + "计算机使用： " + str(player.jisuanji) + ", " + "信用： " + str(player.xinyong) + '\n')
+            f.write("乔庄： " + str(player.qiaozhuang) + ", " + "闪避： " + str(player.shanbi) + ", " + "汽车驾驶： " + str(player.qichejiashi) + ", " + "电器维修： " + str(player.dianqiweixiu) + '\n')
+            f.write("电子学： " + str(player.dianzixue) + ", " + "话术： " + str(player.huashu) + ", " + "斗殴： " + str(player.konghe) + ", " + "跳跃： " + str(player.tiaoyue) + '\n')
+            f.write("母语： " + str(player.edu) + ", " + "法律： " + str(player.falv) + ", " + "图书馆使用： " + str(player.tushuguan) + ", " + "聆听： " + str(player.lingting) + '\n')
+            f.write("锁匠： " + str(player.suojiang) + ", " + "机械维修： " + str(player.jixieweixiu) + ", " + "医学： " + str(player.yixue) + ", " + "博物学： " + str(player.bowuxue) + '\n')
+            f.write("领航： " + str(player.linghang) + ", " + "神秘学： " + str(player.shenmixue) + ", " + "操作重型机械： " + str(player.zhongxingjixie) + ", " + "说服： " + str(player.shuofu) + '\n')
+            f.write("精神分析： " + str(player.jingshengfenxi) + ", " + "心理学： " + str(player.xinlixue) + ", " + "骑术： " + str(player.qishu) + ", " + "妙手： " + str(player.miaoshou) + '\n')
+            f.write("侦查： " + str(player.zhencha) + ", " + "潜行： " + str(player.qianxing) + ", " + "游泳： " + str( player.youyong) + ", " + "投掷： " + str(player.touzhi) + '\n')
+            f.write("追踪： " + str(player.zhuizong) + '\n')
+
+        tkinter.messagebox.showinfo("你好六啊", "导出角色成功")
+
+    def create_character(self):
 
         tmp_player = copy.deepcopy(self.player)
 
@@ -1202,8 +1253,21 @@ class Skills():
             tkinter.messagebox.showinfo("我康你啊，还是不懂哦", "小贪心哦，兴趣点数用的多了哦，再回去口算一下")
             return
 
+        tmp_player.sex = self.entrysex.get()
+        tmp_player.living = self.entryliving.get()
+        tmp_player.born = self.entryborn.get()
+        tmp_player.appdes = self.entryappdes.get()
+        tmp_player.thoughts = self.entrythoughts.get()
+        tmp_player.love = self.entrylove.get()
+        tmp_player.place = self.entryplace.get()
+        tmp_player.tresure = self.entrytresure.get()
+        tmp_player.special = self.entryspecial.get()
+        tmp_player.things = self.textthings.get("1.0",'end-1c')
+        tmp_player.background = self.textbackground.get("1.0", 'end-1c')
 
+        self.player = tmp_player
 
+        tkinter.messagebox.showinfo("你好六啊", "角色保存成功，可按右边的按钮一键导出txt")
 
         print("本职还剩" + str(benzhi_total))
         print("兴趣还剩" + str(xingqu_total))
